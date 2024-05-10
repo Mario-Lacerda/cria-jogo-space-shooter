@@ -1,0 +1,75 @@
+class Vector2 {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  add(vector) {
+    this.x += vector.x;
+    this.y += vector.y;
+  }
+
+  subtract(vector) {
+    this.x -= vector.x;
+    this.y -= vector.y;
+  }
+
+  multiply(scalar) {
+    this.x *= scalar;
+    this.y *= scalar;
+  }
+
+  divide(scalar) {
+    this.x /= scalar;
+    this.y /= scalar;
+  }
+
+  magnitude() {
+    return Math.sqrt(this.x * this.x + this.y * this.y);
+  }
+
+  normalize() {
+    const magnitude = this.magnitude();
+    this.x /= magnitude;
+    this.y /= magnitude;
+  }
+}
+
+class Ship {
+  constructor(position, velocity) {
+    this.position = position;
+    this.velocity = velocity;
+  }
+
+  update() {
+    this.position.add(this.velocity);
+  }
+
+  draw(ctx) {
+    ctx.fillStyle = "white";
+    ctx.fillRect(this.position.x - 5, this.position.y - 5, 10, 10);
+  }
+
+  collidesWith(enemy) {
+    return this.position.x < enemy.position.x + 10 &&
+           this.position.x + 10 > enemy.position.x &&
+           this.position.y < enemy.position.y + 10 &&
+           this.position.y + 10 > enemy.position.y;
+  }
+}
+
+class Enemy {
+  constructor(position, velocity) {
+    this.position = position;
+    this.velocity = velocity;
+  }
+
+  update() {
+    this.position.add(this.velocity);
+  }
+
+  draw(ctx) {
+    ctx.fillStyle = "red";
+    ctx.fillRect(this.position.x - 5, this.position.y - 5, 10, 10);
+  }
+}
